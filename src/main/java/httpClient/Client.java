@@ -22,7 +22,7 @@ public class Client {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("リクエストを入力し、終わったら^Dで入力終了");
+		System.out.println("リクエストを入力し、終わったら^Dで入力終了。");
 		while (scanner.hasNext()) {
 
 			String str = scanner.nextLine();
@@ -30,16 +30,17 @@ public class Client {
 		}
 		writer.write("\n");
 
-		Scanner scan = new Scanner(System.in);
-		System.out.println("bodyを入力し、終わったら^Dで入力終了。");
-		while (scan.hasNext()) {
-			String str = scan.nextLine();
-			writer.write(str + "\n");
-		}
+//		Scanner scan = new Scanner(System.in);
+//		System.out.println("bodyを入力し、終わったら^Dで入力終了。");
+//		while (scan.hasNext()) {
+//			String str = scan.nextLine();
+//			writer.write(str + "\n");
+//		}
+//		scan.close();
 
 		System.out.println("<<< Request");
 		scanner.close();
-		scan.close();
+
 
 		writer.flush();
 
