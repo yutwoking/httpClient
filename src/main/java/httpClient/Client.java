@@ -8,54 +8,51 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client {
-    public static void main(String[] args) throws Exception{
-    	System.out.println("start client >>>");
+	public static void main(String[] args) throws Exception {
+		System.out.println("start client >>>");
 
-    	String host = "localhost";
-    	int port = 80;
+		String host = "localhost";
+		int port = 80;
 
-    	try {
-    		while(true) {
-    			clientWork(host,port);
-    			break;
-    		}
-    	}catch(Exception e) {
-    		 e.printStackTrace(System.err);
-    	}
-    }
+		Socket socket = new Socket(host, port);
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("リクエストを入力し、終わったら^Dで入力終了");
+		while (scanner.hasNext()) {
 
-    public static void clientWork(String host, int port) throws Exception {
-    	Socket socket = new Socket(host,port);
-    	BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-    	BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			String str = scanner.nextLine();
+			writer.write(str + "\n");
+		}
+		writer.write("\n");
 
-//    	Scanner scanner = new Scanner(System.in);
-//        System.out.println("リクエストを入力");
-//        while(scanner.hasNext()){
-//        	writer.write(scanner.next() + "\r\n");
-//        }
-//        System.out.println("<<< Request");
-//    	 scanner.close();
+		Scanner scan = new Scanner(System.in);
+		System.out.println("bodyを入力し、終わったら^Dで入力終了。");
+		while (scan.hasNext()) {
+			String str = scan.nextLine();
+			writer.write(str + "\n");
+		}
 
-        writer.write("GET " + "/" + " HTTP/1.0\r\n");
-        writer.write("Host: " + host + ":" + port + "\r\n");
-        writer.write("\r\n");
-       	writer.flush();
+		System.out.println("<<< Request");
+		scanner.close();
+		scan.close();
 
+		writer.flush();
 
-        String line = reader.readLine();
-        System.out.println("Response >>>");
-        while(line != null) {
-        	System.out.println(line);
-        	line = reader.readLine();
-        }
+		String line = reader.readLine();
+		System.out.println("Response >>>");
+		while (line != null) {
+			System.out.println(line);
+			line = reader.readLine();
+		}
 
-        writer.close();
-        reader.close();
-        socket.close();
-        System.out.println("<<< Response");
-    }
+		writer.close();
+		reader.close();
+		socket.close();
+		System.out.println("<<< Response");
+	}
 }
