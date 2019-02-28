@@ -23,20 +23,12 @@ public class Client {
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("リクエストを入力し、終わったら^Dで入力終了。");
-		while (scanner.hasNext()) {
+		while (scanner.hasNextLine()) {
 
 			String str = scanner.nextLine();
 			writer.write(str + "\n");
 		}
 		writer.write("\n");
-
-//		Scanner scan = new Scanner(System.in);
-//		System.out.println("bodyを入力し、終わったら^Dで入力終了。");
-//		while (scan.hasNext()) {
-//			String str = scan.nextLine();
-//			writer.write(str + "\n");
-//		}
-//		scan.close();
 
 		System.out.println("<<< Request");
 		scanner.close();
